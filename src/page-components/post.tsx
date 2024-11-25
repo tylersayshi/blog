@@ -37,7 +37,7 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
         title={`${frontmatter.title} — Waku`}
         description={frontmatter.description}
       />
-      <article className="container prose dark:prose-invert lg:prose-xl my-20">
+      <article className="container prose dark:prose-invert lg:prose-xl">
         <h1>{frontmatter.title}</h1>
         <span className="block text-gray-500 -mt-6 -mb-2">{date}</span>
         {content}
