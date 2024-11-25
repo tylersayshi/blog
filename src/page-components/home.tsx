@@ -40,7 +40,7 @@ const getData = async () => {
   const blogArticles: Array<any> = [];
 
   readdirSync("./posts").forEach((fileName) => {
-    if (fileName.endsWith(".mdx") || fileName.endsWith(".md")) {
+    if (fileName.endsWith(".mdx")) {
       blogFileNames.push(fileName);
     }
   });
