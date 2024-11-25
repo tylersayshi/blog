@@ -12,6 +12,7 @@ export async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <div className="font-sans">
+      <link rel="icon" href="/favicon.ico" />
       <meta name="description" content={data.description} />
       <Header />
       <main className="m-6 flex items-center *:min-h-64 *:min-w-64 lg:m-0 lg:min-h-svh justify-center">
