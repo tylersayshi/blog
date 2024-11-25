@@ -13,7 +13,7 @@ export async function HomePage() {
     <article className="container justify-center text-center flex gap-2 flex-col max-w-96">
       <title>tyler&apos;s blog</title>
       <h1 className="text-4xl font-bold tracking-tight mb-4">posts</h1>
-      <ul>{allPosts.length ? allPosts : <li>No posts yes :)</li>}</ul>
+      <ul>{allPosts.length ? allPosts : <li>No posts yet :)</li>}</ul>
     </article>
   );
 }
