@@ -1,0 +1,152 @@
+---
+title: A Page of Query Params with nuqs
+description: how to organize query states by route
+date: "2024-11-30"
+draft: true
+---
+
+If you've seen code like this before, you'd probably appreciate [nuqs](https://nuqs.47ng.com/).
+
+```tsx
+const HomePage = () => {
+  const router = useRouter();
+  const [number, setNumber] = useState(0);
+
+  useEffect(() => {
+    setNumber(Number(router.query.number));
+  }, [router.query.number]);
+
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <p>The number is {number}</p>
+      <button
+        onClick={() => {
+          // maybe you've seen setNumber called alongside it which is a bug
+          // setNumber(number + 1);
+          void router.push({
+            pathname: "/",
+            query: { number: number + 1 },
+          });
+        }}
+      >
+        Increment
+      </button>
+    </div>
+  );
+};
+```
+
+`useRouter` and now `useSearchParams` from next are fine for the simple demo, but when it comes to building large apps that meaningfully use the search params as state, it's not enough. If you're not fully sold, but maybe a little query param curious, I'd highly recommend François' post about the library [here](https://francoisbest.com/posts/2023/storing-react-state-in-the-url-with-nextjs).
+
+## Organizing useQueryState in Shared Hooks
+
+When you start using nuqs, you may start out with something like this:
+
+```tsx
+const HomePage = () => {
+  const [number, setNumber] = useQueryState(
+    "number",
+    parseAsNumber.withDefault(0)
+  );
+
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <p>The number is {number}</p>
+      <button
+        onClick={() => {
+          void setNumber(number + 1);
+        }}
+      >
+        Increment
+      </button>
+    </div>
+  );
+};
+```
+
+This is another great demo and shows the power of the library very efficiently. But if you've experienced code with `useState`'s everywhere, it's very easy to see how this could get out of hand quickly in a large codebase. The power with this library makes it very easy to use url state in a typesafe app which is very useful when used correct, but dangerous at the same time. URL search param key collisions are now easier, misuse by prop drilling the value and setter from `useQueryState` is easier, and whatever else your LLM could imagine when it sees the api similarity with `useState` and `useQuery`.
+
+So you may want to abstract `useQueryState` uses into exported hooks like this:
+
+```tsx
+import { useQueryState, parseAsNumber } from "nuqs";
+
+export const useNumberState = () => {
+  return useQueryState("number", parseAsNumber.withDefault(0));
+};
+```
+
+This is a big improvement! This should mostly solve duplicate key errors or accidentally redefined instances of `useQueryState`. This will encourage two main things:
+
+- definition of `useQueryState`'s distinct from individual components making them easier to share
+- when defined in an external file, it will be easier to identify duplicates as well
+
+## When This Goes Wrong
+
+Most sites I've worked on would organize search params on a per path basis. So when we start to export `useNumberState` and others that share similar names globally, we can run into issues.
+
+```tsx
+import { useQueryState, parseAsString } from "nuqs";
+
+// /home/query-params.ts
+/** Team as abbreviation stored in url */
+export const useTeamFilterState = () => {
+  return useQueryState("team", parseAsString); // expected: team=BOS
+};
+
+// /game/query-params.ts
+/** Team id stored in url */
+export const useTeamFilterState = () => {
+  return useQueryState("team", parseAsString);
+};
+```
+
+On our sports apps, it would be very possible for two pages to have team filters; one with team abbreviation and another with team id. Now, you could solve this by renaming to `useTeamIdFilterState` and so on, but they're not even on the same page! Naming is hard, so let's use the path organization of state to make our lives easier.
+
+## Route Organized useQueryState's
+
+Finally, we land on `(app|pages)/my-page/query-params.ts`. Being mindful of the exported names will simplify our auto-imports, reduce cognitive load on naming, and reduce the surface area for potential misuse.
+
+```ts
+const useGameStartTimeState = () => {
+  return useQueryState("time", parseAsIsoDateTime);
+};
+
+const useGameEndTimeState = () => {
+  return useQueryState("time", parseAsIsoDate);
+};
+
+export const myPageQueryParams = {
+  useGameStartTimeState,
+  useGameEndTimeState,
+};
+```
+
+When each page has a single object of query state's to import it becomes trivial. Here's the final snippet to show how we'd easily hook into our state anywhere within the page now:
+
+```tsx
+import { myPageQueryParams } from "./query-params";
+
+const MyPage = () => {
+  const [gameStartTime] = myPageQueryParams.useGameStartTimeState();
+  const [gameEndTime] = myPageQueryParams.useGameEndTimeState();
+
+  return (
+    <div>
+      <h1>My Page</h1>
+      <p>The game start time is {gameStartTime}</p>
+      <p>The game end time is {gameEndTime}</p>
+    </div>
+  );
+};
+```
+
+## A Note on tanstack/router
+
+[Tanstack router](https://tanstack.com/router/latest) has popularized and showed the power of router level typesafe state management of the url. From what I can tell, tanstack router is currently the best way to organize query param state for large apps. That being said, we can replicate similar functionality in nextjs with nuqs + this little exporting pattern.
+
+## Conclusion
+
+The URL is a great place to store state. Nextjs surfaces the search params from the router, but leaves everything else up to the developer. For me, handling the url directly in components as a string or even as URLSearchParams is reminiscent of fetching data from a `useEffect`; you _can_ do it, but you probably shouldn't. So in the same way I would say "you should probably just use tanstack/react-query", I'll say "you should probably use nuqs (and organize your exports)".

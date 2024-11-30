@@ -43,6 +43,24 @@ a:hover {
   color: var(--accent-dark);
 }
 
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a {
+  color: var(--text-primary-light);
+}
+
+.prose h1 a:hover,
+.prose h2 a:hover,
+.prose h3 a:hover,
+.prose h4 a:hover,
+.prose h5 a:hover,
+.prose h6 a:hover {
+  color: var(--text-secondary-light);
+}
+
 .prose {
   color: var(--text-primary-light);
 }
