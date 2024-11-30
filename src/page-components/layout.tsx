@@ -15,7 +15,7 @@ export async function RootLayout({ children }: RootLayoutProps) {
       <link rel="icon" href="/favicon.ico" />
       <meta name="description" content={data.description} />
       <Header />
-      <main className="m-6 flex items-center *:min-h-64 *:min-w-64 lg:m-0 lg:min-h-svh justify-center">
+      <main className="m-6 flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 lg:min-h-svh justify-center">
         {children}
       </main>
       <Footer />

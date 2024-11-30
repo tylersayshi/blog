@@ -10,7 +10,7 @@ export async function HomePage() {
   ));
 
   return (
-    <article className="container justify-center text-center flex gap-2 flex-col max-w-96">
+    <article className="container justify-center text-center flex gap-2 flex-col max-w-[500px]">
       <title>tyler&apos;s blog</title>
       <h1 className="text-4xl font-bold tracking-tight mb-4">posts</h1>
       <ul>{allPosts.length ? allPosts : <li>No posts yet :)</li>}</ul>
@@ -25,9 +25,9 @@ const PostCard = ({ post }: { post: PostFrontmatter }) => {
         href={`/${post.slug}`}
         className="block p-4 w-full rounded-md border-2 border-black dark:border-white text-left hover:bg-slate-200 dark:hover:bg-gray-900"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex justify-between">
           <h2 className="text-xl font-bold">{post.title}</h2>
-          <p className="text-sm">{post.date}</p>
+          <p className="text-sm ml-2 mt-1 whitespace-nowrap">{post.date}</p>
         </div>
         <p className="text-sm">{post.description}</p>
       </a>
@@ -55,14 +55,10 @@ const getData = async () => {
     });
     const frontmatter = mdx.frontmatter as PostFrontmatter;
 
-    const date = new Date(frontmatter.date).toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
+    const date = new Date(frontmatter.date).toISOString().slice(0, 10);
 
     const article = {
-      slug: frontmatter.slug,
+      slug: fileName.slice(0, -4),
       title: frontmatter.title,
       description: frontmatter.description,
       date,

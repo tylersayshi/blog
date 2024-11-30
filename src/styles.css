@@ -55,6 +55,14 @@ a:hover {
   color: var(--accent-dark);
 }
 
+.shiki {
+  margin: 0 !important;
+}
+
+.shiki code {
+  font-family: monospace;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background-light: #1a1a1a;

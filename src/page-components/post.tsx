@@ -9,13 +9,7 @@ type BlogArticlePageProps = {
 };
 
 export async function PostPage({ slug }: BlogArticlePageProps) {
-  const fileName = await getFileName(slug);
-
-  if (!fileName) {
-    return null;
-  }
-
-  const path = `./posts/${fileName}`;
+  const path = `./posts/${slug}.mdx`;
   const source = readFileSync(path, "utf8");
   const mdx = await compileMDX({
     source,
@@ -25,11 +19,7 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
   const { content } = mdx;
   const frontmatter = mdx.frontmatter as PostFrontmatter;
 
-  const date = new Date(frontmatter.date).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  const date = new Date(frontmatter.date).toISOString().slice(0, 10);
 
   return (
     <>
@@ -37,7 +27,7 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
         title={`${frontmatter.title} — Waku`}
         description={frontmatter.description}
       />
-      <article className="container prose dark:prose-invert lg:prose-xl">
+      <article className="container prose dark:prose-invert">
         <h1>{frontmatter.title}</h1>
         <span className="block text-gray-500 -mt-6 -mb-2">{date}</span>
         {content}
@@ -45,29 +35,3 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
     </>
   );
 }
-
-const getFileName = async (slug: string) => {
-  const blogFileNames: Array<string> = [];
-  const blogSlugToFileName: Record<string, string> = {};
-
-  readdirSync("./posts").forEach((fileName) => {
-    if (fileName.endsWith(".mdx")) {
-      blogFileNames.push(fileName);
-    }
-  });
-
-  for await (const fileName of blogFileNames) {
-    const path = `./posts/${fileName}`;
-    const source = readFileSync(path, "utf8");
-    const mdx = await compileMDX({
-      source,
-      options: { parseFrontmatter: true },
-    });
-    const frontmatter = mdx.frontmatter as PostFrontmatter;
-    blogSlugToFileName[frontmatter.slug] = fileName;
-  }
-
-  const fileName = blogSlugToFileName[slug];
-
-  return fileName;
-};

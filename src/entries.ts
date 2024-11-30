@@ -3,9 +3,7 @@ import type { PathsForPages } from "waku/router";
 import { RootLayout } from "./page-components/layout";
 import { HomePage } from "./page-components/home";
 import { PostPage } from "./page-components/post";
-import { readdirSync, readFileSync } from "node:fs";
-import { compileMDX } from "next-mdx-remote/rsc";
-import { PostFrontmatter } from "./types";
+import { readdirSync } from "node:fs";
 import { Root } from "./page-components/root";
 
 const getBlogPaths = async () => {
@@ -19,14 +17,8 @@ const getBlogPaths = async () => {
   });
 
   for await (const fileName of blogFileNames) {
-    const path = `./posts/${fileName}`;
-    const source = readFileSync(path, "utf8");
-    const mdx = await compileMDX({
-      source,
-      options: { parseFrontmatter: true },
-    });
-    const frontmatter = mdx.frontmatter as PostFrontmatter;
-    blogPaths.push(frontmatter.slug);
+    const slug = fileName.slice(0, -4);
+    blogPaths.push(slug);
   }
 
   return blogPaths;
