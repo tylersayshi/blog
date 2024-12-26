@@ -7,7 +7,9 @@ export const Header = () => {
       <h2 className="text-lg font-bold tracking-tight">
         <Link to="/">༼ ╹‿╹ ༽</Link>
       </h2>
-      <Face height={50} />
+      <a href="https://tylur.dev">
+        <Face height={50} />
+      </a>
     </header>
   );
 };
