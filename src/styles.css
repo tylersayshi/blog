@@ -39,6 +39,10 @@ a {
   color: var(--accent-light);
 }
 
+header a {
+  color: var(--text-primary-light);
+}
+
 a:hover {
   color: var(--accent-dark);
 }
