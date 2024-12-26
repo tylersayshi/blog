@@ -66,7 +66,7 @@ const HomePage = () => {
 };
 ```
 
-This is another great demo and shows the power of the library very efficiently. But if you've experienced code with `useState`'s everywhere, it's very easy to see how this could get out of hand quickly in a large codebase. The power with this library makes it very easy to use url state in a typesafe app which is very useful when used correct, but dangerous at the same time. URL search param key collisions are now easier, misuse by prop drilling the value and setter from `useQueryState` is easier, and whatever else your LLM could imagine when it sees the api similarity with `useState` and `useQuery`.
+This is another great demo and shows the power of the library very efficiently. But if you've experienced code with `useState`'s everywhere, it's very easy to see how this could get out of hand quickly in a large codebase. The power with this library makes it very easy to use url state in a typesafe app which is very useful when used correctly, but dangerous at the same time. URL search param key collisions are now easier, misuse by prop drilling the value and setter from `useQueryState` is easier, and whatever else your LLM could imagine when it sees the api similarity with `useState` and `useQuery`.
 
 So you may want to abstract `useQueryState` uses into exported hooks like this:
 
@@ -103,11 +103,13 @@ export const useTeamFilterState = () => {
 };
 ```
 
+**Note:** `nuqs` works well when `useQueryState` keys are tied to components and are all unique. The problems I am describing here are strictly related to an attempt to organize keys per-route.
+
 On my team's apps, it would be very possible for two pages to have team filters; one with team abbreviation and another with team id. Now, you could solve this by renaming to `useTeamIdFilterState` and so on, but they're not even on the same page! Naming is hard, so let's use the path organization of state to make our lives easier.
 
 ## Route Organized useQueryState's
 
-Finally, we land on `(app|pages)/my-page/query-params.ts`. Being mindful of the exported names will simplify our auto-imports, reduce cognitive load on naming, and reduce the surface area for potential misuse.
+Finally, we land on `app/my-page/query-params.ts`. Being mindful of the exported names will simplify our auto-imports, reduce cognitive load on naming, and reduce the surface area for potential misuse.
 
 ```ts
 const useGameStartTimeState = () => {
@@ -149,7 +151,9 @@ const MyPage = () => {
 
 ## Conclusion
 
-The URL is a great place to store state. Nextjs surfaces the search params from the router, but leaves everything else up to the developer. For me, handling the url directly in components as a string or even as URLSearchParams is reminiscent of fetching data from a `useEffect`; you _can_ do it, but you probably shouldn't. So in the same way I would say "you should probably just use tanstack/react-query", I'll say "you should probably use nuqs (and organize your exports)".
+The URL is a great place to store state. I think the ideal future for URL state consists of both route-tied query params & component-tied query params. This post shows how to organize query param state by route with a library that primarily works to organize by component.
+
+Nextjs surfaces the search params from the router, but leaves everything else up to the developer. For me, handling the url directly in components as a string or even as URLSearchParams is reminiscent of fetching data from a `useEffect`; you _can_ do it, but you probably shouldn't. So in the same way I would say "you should probably just use tanstack/react-query", I'll say "you should probably use nuqs (and organize your exports)".
 
 ### Credits
 
