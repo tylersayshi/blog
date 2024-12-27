@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
+import { Analytics } from "../components/analytics";
 
 type RootLayoutProps = { children: ReactNode };
 
@@ -19,6 +20,7 @@ export async function RootLayout({ children }: RootLayoutProps) {
         {children}
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 }
