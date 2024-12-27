@@ -1,4 +1,4 @@
-import { new_createPages } from "waku";
+import { createPages } from "waku";
 import type { PathsForPages } from "waku/router";
 import { RootLayout } from "./page-components/layout";
 import { HomePage } from "./page-components/home";
@@ -24,7 +24,7 @@ const getBlogPaths = async () => {
   return blogPaths;
 };
 
-const pages = new_createPages(
+const pages = createPages(
   async ({ createPage, createLayout, createRoot }) => {
     const blogPaths = await getBlogPaths();
     return [
