@@ -20,7 +20,7 @@ export async function HomePage() {
 
 const PostCard = ({ post }: { post: PostFrontmatter }) => {
   return (
-    <li key={post.slug} className="w-full">
+    <li key={post.slug} className="w-full post-card">
       <a
         href={`/${post.slug}`}
         className="block p-4 w-full rounded-md border-2 border-black dark:border-white text-left hover:bg-slate-200 dark:hover:bg-gray-900"

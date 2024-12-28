@@ -39,12 +39,16 @@ a {
   color: var(--accent-light);
 }
 
-header a {
+header a, .post-card a {
   color: var(--text-primary-light);
 }
 
 a:hover {
   color: var(--accent-dark);
+}
+
+.post-card a:hover {
+  color: var(--accent-light);
 }
 
 .prose h1 a,

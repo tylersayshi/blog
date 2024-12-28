@@ -49,7 +49,7 @@ export const components = {
     return (
       <Code
         code={children.props.children}
-        className="code overflow-clip overflow-x-scroll rounded-xl"
+        className="code overflow-x-auto text-xs md:text-base rounded-xl"
         {...rest}
       />
     );
