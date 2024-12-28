@@ -8,12 +8,12 @@ import { Root } from "./page-components/root";
 
 const getBlogPaths = async () => {
   const blogPaths: string[] = [];
-  const blogFileNames: string[] = [];
 
-  readdirSync("./posts").forEach((fileName) => {
+  const blogFileNames = readdirSync("./posts").flatMap((fileName) => {
     if (fileName.endsWith(".mdx")) {
-      blogFileNames.push(fileName);
+      return [fileName];
     }
+    return [];
   });
 
   for await (const fileName of blogFileNames) {
@@ -21,12 +21,14 @@ const getBlogPaths = async () => {
     blogPaths.push(slug);
   }
 
+  console.log({ blogFileNames, blogPaths });
   return blogPaths;
 };
 
 const pages = new_createPages(
   async ({ createPage, createLayout, createRoot }) => {
     const blogPaths = await getBlogPaths();
+    console.log({ blogPaths });
     return [
       createRoot({
         render: "static",

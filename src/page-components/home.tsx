@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { PostFrontmatter } from "../types";
+import { Post } from "bsky-react-post";
 
 export async function HomePage() {
   const posts = await getData();
@@ -14,6 +15,7 @@ export async function HomePage() {
       <title>tyler&apos;s blog</title>
       <h1 className="text-4xl font-bold tracking-tight mb-4">posts</h1>
       <ul>{allPosts.length ? allPosts : <li>No posts yet :)</li>}</ul>
+      <Post handle="tylur.dev" id="3lctuwxwrl22y" />
     </article>
   );
 }

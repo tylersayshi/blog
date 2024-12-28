@@ -10,17 +10,18 @@
   },
   "dependencies": {
     "@sindresorhus/slugify": "^2.2.1",
+    "bsky-react-post": "^0.1.7",
     "next-mdx-remote": "^5.0.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "react": "19.0.0-rc-5c56b873-20241107",
     "react-dom": "19.0.0-rc-5c56b873-20241107",
     "react-server-dom-webpack": "19.0.0-rc-5c56b873-20241107",
-    "shiki": "^1.23.1",
+    "shiki": "^1.24.1",
     "waku": "0.21.6"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.1",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "autoprefixer": "10.4.20",
