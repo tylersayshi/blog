@@ -4,6 +4,7 @@ import { RootLayout } from "./page-components/layout";
 // import { HomePage } from "./page-components/home";
 import { PostPage } from "./page-components/post";
 import { readdirSync } from "node:fs";
+import { HomePage } from "./page-components/home";
 
 const getBlogPaths = async () => {
   const blogPaths: string[] = [];
@@ -32,11 +33,11 @@ const pages = createPages(async ({ createPage, createLayout }) => {
       component: RootLayout,
     }),
 
-    // createPage({
-    //   render: "static",
-    //   path: "/",
-    //   component: HomePage,
-    // }),
+    createPage({
+      render: "static",
+      path: "/",
+      component: HomePage,
+    }),
 
     createPage({
       render: "static",
