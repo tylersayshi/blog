@@ -1,10 +1,9 @@
 import { createPages } from "waku";
 import type { PathsForPages } from "waku/router";
 import { RootLayout } from "./page-components/layout";
-import { HomePage } from "./page-components/home";
+// import { HomePage } from "./page-components/home";
 import { PostPage } from "./page-components/post";
 import { readdirSync } from "node:fs";
-import { Root } from "./page-components/root";
 
 const getBlogPaths = async () => {
   const blogPaths: string[] = [];
@@ -24,36 +23,29 @@ const getBlogPaths = async () => {
   return blogPaths;
 };
 
-const pages = createPages(
-  async ({ createPage, createLayout, createRoot }) => {
-    const blogPaths = await getBlogPaths();
-    return [
-      createRoot({
-        render: "static",
-        component: Root,
-      }),
+const pages = createPages(async ({ createPage, createLayout }) => {
+  const blogPaths = await getBlogPaths();
+  return [
+    createLayout({
+      render: "static",
+      path: "/",
+      component: RootLayout,
+    }),
 
-      createLayout({
-        render: "static",
-        path: "/",
-        component: RootLayout,
-      }),
+    // createPage({
+    //   render: "static",
+    //   path: "/",
+    //   component: HomePage,
+    // }),
 
-      createPage({
-        render: "static",
-        path: "/",
-        component: HomePage,
-      }),
-
-      createPage({
-        render: "static",
-        component: PostPage,
-        path: "/[slug]",
-        staticPaths: blogPaths,
-      }),
-    ];
-  }
-);
+    createPage({
+      render: "static",
+      component: PostPage,
+      path: "/[slug]",
+      staticPaths: blogPaths,
+    }),
+  ];
+});
 
 declare module "waku/router" {
   interface RouteConfig {
