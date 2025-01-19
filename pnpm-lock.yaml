@@ -30,8 +30,8 @@ importers:
         specifier: ^1.27.2
         version: 1.27.2
       waku:
-        specifier: 0.21.15
-        version: 0.21.15(@types/node@22.10.7)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react-server-dom-webpack@19.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(webpack@5.96.1))(react@19.0.0)(terser@5.37.0)(yaml@2.7.0)
+        specifier: https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku
+        version: https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku(@types/node@22.10.7)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react-server-dom-webpack@19.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(webpack@5.96.1))(react@19.0.0)(terser@5.37.0)(yaml@2.7.0)
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.16
@@ -1753,8 +1753,9 @@ packages:
       yaml:
         optional: true
 
-  waku@0.21.15:
-    resolution: {integrity: sha512-DtURHbrtecUgWuZELOOVK8mKmFbXeopF7foVo1iWW/66VjwRCISZbU2kD9OiiiVOe73ZegTUbtAfxpD1gF1Yew==}
+  waku@https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku:
+    resolution: {tarball: https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku}
+    version: 0.21.15
     engines: {node: ^20.8.0 || ^18.17.0 || ^22.7.0}
     hasBin: true
     peerDependencies:
@@ -3753,7 +3754,7 @@ snapshots:
       terser: 5.37.0
       yaml: 2.7.0
 
-  waku@0.21.15(@types/node@22.10.7)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react-server-dom-webpack@19.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(webpack@5.96.1))(react@19.0.0)(terser@5.37.0)(yaml@2.7.0):
+  waku@https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku(@types/node@22.10.7)(jiti@1.21.7)(react-dom@19.0.0(react@19.0.0))(react-server-dom-webpack@19.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(webpack@5.96.1))(react@19.0.0)(terser@5.37.0)(yaml@2.7.0):
     dependencies:
       '@hono/node-server': 1.13.7(hono@4.6.16)
       '@swc/core': 1.10.7

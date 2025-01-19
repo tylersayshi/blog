@@ -1,10 +1,10 @@
 import { createPages } from "waku";
 import type { PathsForPages } from "waku/router";
 import { RootLayout } from "./page-components/layout";
-// import { HomePage } from "./page-components/home";
 import { PostPage } from "./page-components/post";
-import { readdirSync } from "node:fs";
 import { HomePage } from "./page-components/home";
+import { readdirSync } from "node:fs";
+import { GET } from "./api/rss.xml";
 
 const getBlogPaths = async () => {
   const blogPaths: string[] = [];
@@ -24,7 +24,7 @@ const getBlogPaths = async () => {
   return blogPaths;
 };
 
-const pages = createPages(async ({ createPage, createLayout }) => {
+const pages = createPages(async ({ createPage, createLayout, createApi }) => {
   const blogPaths = await getBlogPaths();
   return [
     createLayout({
@@ -44,6 +44,13 @@ const pages = createPages(async ({ createPage, createLayout }) => {
       component: PostPage,
       path: "/[slug]",
       staticPaths: blogPaths,
+    }),
+
+    createApi({
+      path: "/api/rss.xml",
+      method: "GET",
+      render: "static",
+      handler: GET,
     }),
   ];
 });

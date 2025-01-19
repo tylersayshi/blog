@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "waku dev",
-    "build": "waku build --with-netlify-static",
+    "dev": "VITE_EXPERIMENTAL_WAKU_ROUTER=true waku dev",
+    "build": "VITE_EXPERIMENTAL_WAKU_ROUTER=true waku build --with-netlify-static",
     "start": "waku start"
   },
   "dependencies": {
@@ -16,7 +16,7 @@
     "react-dom": "19.0.0",
     "react-server-dom-webpack": "19.0.0",
     "shiki": "^1.27.2",
-    "waku": "0.21.15"
+    "waku": "https://pkg.csb.dev/dai-shi/waku/commit/1ed6b880/waku"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
