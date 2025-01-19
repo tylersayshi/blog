@@ -62,7 +62,7 @@ export const GET = async () => {
       continue;
     }
 
-    const [year, month, day] = frontmatter.date.split("/").map(Number) as [
+    const [year, month, day] = frontmatter.date.split("-").map(Number) as [
       number,
       number,
       number,
