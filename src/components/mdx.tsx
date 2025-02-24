@@ -1,6 +1,7 @@
 import { Link } from "waku";
 
 import { Code } from "./code";
+import { Note } from "./note";
 import { getAnchor } from "../utils";
 
 export const components = {
@@ -54,4 +55,6 @@ export const components = {
       />
     );
   },
+
+  Note,
 };

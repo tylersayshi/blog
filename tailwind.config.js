@@ -4,4 +4,9 @@ import typography from "@tailwindcss/typography";
 export default {
   content: ["./src/**/*.{ts,tsx}"],
   plugins: [typography],
+  theme: {
+    fontFamily: {
+      chalk: "var(--font-chalk)",
+    },
+  },
 };
