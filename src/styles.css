@@ -17,7 +17,7 @@
   --border-dark: #333333;
   --shadow-dark: rgba(255, 255, 255, 0.1);
 
-  --font-stack: Chalkboard, ChalkboardSE-Regular, ChalkboardSE, ChalkDuster,
+  --font-chalk: Chalkboard, ChalkboardSE-Regular, ChalkboardSE, ChalkDuster,
     Comic Sans MS, comic-sans, sans-serif;
 }
 
@@ -27,7 +27,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-stack);
+  font-family: var(--font-chalk);
 }
 
 body {
@@ -39,7 +39,8 @@ a {
   color: var(--accent-light);
 }
 
-header a, .post-card a {
+header a,
+.post-card a {
   color: var(--text-primary-light);
 }
 

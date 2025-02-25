@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
-import { Analytics } from "../components/analytics";
+import { PostHogProvider } from "../components/analytics";
 
 type RootLayoutProps = { children: ReactNode };
 
@@ -12,16 +12,30 @@ export async function RootLayout({ children }: RootLayoutProps) {
   const data = await getData();
 
   return (
-    <div className="font-sans">
-      <link rel="icon" href="/favicon.ico" />
-      <meta name="description" content={data.description} />
-      <Header />
-      <main className="m-6 flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 min-h-[calc(100vh-214px)] lg:min-h-svh justify-center">
-        {children}
-      </main>
-      <Footer />
-      <Analytics />
-    </div>
+    <>
+      <meta property="og:url" content="https://tylur.blog" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="tyler's blog" />
+      <meta property="og:description" content="An internet website!" />
+      <meta property="og:image" content="/tylur.svg" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="twitter:domain" content="tylur.blog" />
+      <meta property="twitter:url" content="https://tylur.blog" />
+      <meta name="twitter:title" content="tyler's blog" />
+      <meta name="twitter:description" content="An internet website!" />
+      <meta name="twitter:image" content="/tylur.svg" />
+
+      <div className="font-sans">
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content={data.description} />
+        <Header />
+        <main className="m-6 flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 min-h-[calc(100vh-214px)] lg:min-h-svh justify-center">
+          <PostHogProvider>{children}</PostHogProvider>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

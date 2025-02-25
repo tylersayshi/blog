@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { PostFrontmatter } from "../types";
 import { Meta } from "../components/meta";
