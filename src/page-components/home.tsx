@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { PostFrontmatter } from "../types";
+import { Meta } from "../components/meta";
 
 export async function HomePage() {
   const posts = await getData();
@@ -11,7 +12,7 @@ export async function HomePage() {
 
   return (
     <article className="container justify-center text-center flex gap-2 flex-col max-w-[500px]">
-      <title>tyler&apos;s blog</title>
+      <Meta title="tyler's blog" description="some thoughts" path="/" />
       <h1 className="text-4xl font-bold tracking-tight mb-4">posts</h1>
       <ul className="flex flex-col gap-2">
         {allPosts.length ? allPosts : <li>No posts yet :)</li>}
