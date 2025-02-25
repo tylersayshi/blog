@@ -9,11 +9,11 @@ export const Meta = ({ title, description, path }: MetaProps) => {
     <>
       <title>{title}</title>
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="https://tylur.blog/tylur.svg" />
+      <meta property="og:image" content="https://tylur.blog/tylur.png" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="tylur.blog" />
-      <meta name="twitter:image" content="https://tylur.blog/tylur.svg" />
+      <meta name="twitter:image" content="https://tylur.blog/tylur.png" />
       <meta
         property="og:url"
         content={"https://tylur.blog" + (path === "/" ? "" : path)}
