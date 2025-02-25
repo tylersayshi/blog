@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
-import { Analytics } from "../components/analytics";
+import { PostHogProvider } from "../components/analytics";
 
 type RootLayoutProps = { children: ReactNode };
 
@@ -17,10 +17,9 @@ export async function RootLayout({ children }: RootLayoutProps) {
       <meta name="description" content={data.description} />
       <Header />
       <main className="m-6 flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 min-h-[calc(100vh-214px)] lg:min-h-svh justify-center">
-        {children}
+        <PostHogProvider>{children}</PostHogProvider>
       </main>
       <Footer />
-      <Analytics />
     </div>
   );
 }
