@@ -23,7 +23,11 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
 
   return (
     <>
-      <Meta title={frontmatter.title} description={frontmatter.description} />
+      <Meta
+        title={frontmatter.title}
+        description={frontmatter.description}
+        path={`/${slug}`}
+      />
       <article className="container prose dark:prose-invert">
         <h1>{frontmatter.title}</h1>
         <span className="block text-gray-500 -mt-6 -mb-2">{date}</span>
