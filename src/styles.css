@@ -1,6 +1,8 @@
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "@tailwindcss/typography";
 
 :root {
   --background-light: #f9f9f9;
@@ -16,7 +18,9 @@
   --accent-dark: #00bfff;
   --border-dark: #333333;
   --shadow-dark: rgba(255, 255, 255, 0.1);
+}
 
+@theme {
   --font-chalk: Chalkboard, ChalkboardSE-Regular, ChalkboardSE, ChalkDuster,
     Comic Sans MS, comic-sans, sans-serif;
 }

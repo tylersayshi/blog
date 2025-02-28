@@ -1,5 +1,7 @@
-/** @type {import('vite').UserConfig} */
-export default ({ mode }: { mode: string }) => {
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig(({ mode }: { mode: string }) => {
   if (mode === "development") {
     return {
       optimizeDeps: {
@@ -10,7 +12,10 @@ export default ({ mode }: { mode: string }) => {
           include: ["next-mdx-remote/rsc"],
         },
       },
+      plugins: [tailwindcss()],
     };
   }
-  return {};
-};
+  return {
+    plugins: [tailwindcss()],
+  };
+});
