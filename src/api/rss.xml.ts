@@ -69,7 +69,7 @@ export const GET = async () => {
     ];
     items.push({
       title: frontmatter.title,
-      link: `https://tylur.blog/blog/${fileName.slice(0, -4)}`,
+      link: `https://tylur.blog/${fileName.slice(0, -4)}`,
       description: frontmatter.description || "",
       pubDate: new Date(Date.UTC(year, month - 1, day)).toUTCString(),
     });
