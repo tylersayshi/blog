@@ -23,6 +23,13 @@ export const Meta = ({ title, description, path }: MetaProps) => {
       <meta property="og:description" content={description} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title="rss"
+        href="https://tylur.blog/api/rss.xml"
+      />
     </>
   );
 };
