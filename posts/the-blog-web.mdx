@@ -1,0 +1,67 @@
+---
+title: Searching Buckets of Blogs
+description: search connects the web; use it to connect you and your friends
+date: "2025-03-15"
+---
+
+Over the past several months, I've had a bit of personal discovery of how awesome tech blogs are. It largely started with reading posts from folks like [Josh Comeau](https://www.joshwcomeau.com/), [Matt Pocock](https://www.totaltypescript.com/articles), and [Dan Abramov](https://overreacted.io/), but as I clicked on links within the posts, my reading list grew exponentially. This incremental process of discovery is personalized and also plainly magical.
+
+I got to learn in story form about many of my favorite open source projects and topics. And to find new blogs, I caved and setup an X account after holding out for many many years. As I was getting more active with open source work of my own, and following other devs more closely, it was the place to be (at the time [Aug 2024](https://x.com/tylersayshi/status/1820103424853365023)).
+
+When much of the open source community moved to Bluesky, [I was thrilled](https://bsky.app/profile/tylur.dev/post/3l7acchkt622k). I got to get a fresh start along with everyone else 🎉.
+
+I bring up these platforms because they're a very normal way to share random snippets and links (like to blogs). So for me, it became a pseudo-rss aggregator, where I could follow the people I liked and hear about their blogs as they're published.
+
+## Let's talk search
+
+Search on X and Bluesky are good for what they do, but if you're specifically looking for a past blog you read (maybe by searching some of it's contents), there is a **ton** of noise to sort through.
+
+Google has this same problem and many others. If you search "Reddit cooking pan", there are some great results from r/cookware and r/BuyItForLife. But, if you dare search "Tech blog foo"... all I'll say is good luck. The first results remain Reddit for me, and the rest are heavily skewed to monetized websites/platforms that have heavy traffic. If you remember the author, searching is easy, but otherwise it's finding a needle in a haystack.
+
+_This makes sense though_. It is exactly how Google is designed to work; give the results that are combination of personalized to the searcher + are heavily trafficked + are of financial value to Google to share. Their dataset is also the entire public internet, so talk about _noise_.
+
+These incentives and constraints are distinct from how I'd like to search for tech blogs (at a minimum), so I'd like to make a new sort of search.
+
+## Introducing rss.quest
+
+Searching for tech blogs is almost entirely driven by relevance for me. I don't care if 10 people or 1 million people have read the post... if it's gonna be helpful and the author took the time to put it together, I want to be able to find and read it.
+
+I built [rss.quest](https://rss.quest) as a personal tool for finding the blogs I like and find helpful. My hope is that it can serve as an example for how to create a little document search engine (hosted for free), in a way that can be completely generalizable to whatever your heart desires and not tied to some SaaS product for search.
+
+## How rss.quest works
+
+At build time, the [list of rss feeds](https://github.com/tylersayshi/rss-quest/blob/e80ca2d9d7e3a1407ce4ed37525753484a71cc83/src/_data/feeds.ts#L9) is requested and parsed to create the [inverted search index](https://www.geeksforgeeks.org/inverted-index/), which then get's written to json, and published with the build as a static search.json. This is how I am able to host completely for free served up on CDNs.
+
+At time of initial request from the website, you first receive the html of the UI, and it then requests back to the CDN for the static json index. Once that is received, it's stored in localStorage for instant subsequent loads. And finally, the app loads the index [into a searchable object](https://github.com/tylersayshi/rss-quest/blob/1e82fb3d616dfe06d1f3e5ad5e8e2961a83b6623/src/_lib/search-engine.ts#L33) for handling search at runtime on the UI.
+
+Currently, with 1877 posts indexed on [rss.quest](https://github.com/tylersayshi/rss-quest), the json index sits at ~2.35MB, so with any modern machine it will be quite easily loaded, process, and traversed. There is a hard limit for handling search this way though, localStorage [has a cap of 5 MiB](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria#web_storage). For now, this is very acceptable for me. Most authors I follow have ~5-10 posts, so indexing 100-200 authors is trivial. My goal specific to [rss.quest](https://rss.quest) is to have the list be semi-curated, making for a very high value:storage size ratio.
+
+If you're looking to create a massive index of >5k posts though, this is not the right architecture.
+
+## Why not just use a rss reader?
+
+There is immense value in commonplaces on the internet. Bluesky has really proved this with [starter packs](https://bsky.social/about/blog/06-26-2024-starter-packs) and [custom feeds](https://bsky.social/about/blog/7-27-2023-custom-feeds). I think of [rss.quest](https://rss.quest) as my permanent, public hub for sharing the blogs I find helpful and good.
+
+RSS readers are fine, but I personally love the idea of owning my list of feeds and how they're shared. Also, one big pet peeve that I won't get over with RSS readers is the "reader" part. So much of the fun with reading tech blogs is navigating to the author's site and reading it as they intended.
+
+If you were to live in your reader only, how are you going to experience the [reactive rainbow](https://www.joshwcomeau.com/) or [crazy colored links](https://cassidoo.co/) on your favorite blogs?!
+
+## What's next for rss.quest?
+
+First and foremost, I want to improve the search logic itself. I am not at all an expert in search algorithms themselves and simply took the inverted index approach as it was easy to implement and powerful out of the box. The foundation feels solid, but I'd like to improve flows like searching for phrases and for author + token combinations.
+
+When I reach some contrived "good enough" point with search, I plan to publish the parts (search and build tooling) as a library along with a guide for how to create your own search engine in whatever way you'd like 🚀. One friend had the idea to make a Raycast plugin for example.
+
+## What took me so long?
+
+I was a long term hold out on blogging and micro-blogging. I'm a dyslexic developer, so these mediums just take more-than-average amounts of energy and time for me. Being welcomed into open source, discord servers, and dev Bluesky has really shifted my habits in this way though.
+
+A quick aside about dyslexia: Counter to popular knowledge, it is a [serious advantage](https://www.youtube.com/playlist?list=PLqlYvGeCJum-QmGEeO5nNl9am-_emou0Q) for many developers. I'll save my story about it for another post, but it feels relevant alongside my little project here of indexing and distributing aggregated RSS feeds. This is all about lowering the bar for access to good story-telling for me. (If you want a sneak peek at my thoughts, [this post](https://blog.bethcodes.com/the-dyslexic-programmer) resonates a ton for me)
+
+## Outro
+
+For a while, I've had a lot of thoughts to get out of my head and historically I'd rant over Slack or on a call with a friend. This little blog is the right place for this all though. Sorry and thank you to anyone who has heard me out over the years haha.
+
+My dream is to see a network of search engines pop up that all feel super fast and host for free. But worst case scenario, I've fixed my own problem of searching for that random blog I read last month when it comes up in conversation at the coffee shop.
+
+**PS:** If you've read this far, _thank you_! And if you're interested in any part of building search like this... [let me know](https://bsky.app/profile/tylur.dev)!

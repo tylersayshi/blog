@@ -43,10 +43,7 @@ Let's say you're building a customizable analytics dashboard. Your dashboard can
 
 Co-location of data fetching with hooks is _essential_ to being able to shape the unique and interactive experiences we want. The fetching is specific to each widget type and therefore best located with the widgets themselves.
 
-<Note
-  title="Note"
-  content="Could you attempt to pre-compute all of the widgets for a page and hoist their fetching? Sure. I'd argue that this increase in complexity would become counter-productive and error-prone to a point of it becoming unmanageable though."
-/>
+<Note content="Could you attempt to pre-compute all of the widgets for a page and hoist their fetching? Sure. I'd argue that this increase in complexity would become counter-productive and error-prone to a point of it becoming unmanageable though." />
 
 A common pitfall of data fetching on the client is called "request waterfalls". The first I heard of the issue and a proposed solution was by the [remix/react-router team](https://sergiodxa.com/tutorials/avoid-waterfalls-of-queries-in-remix-loaders). Their route loaders are now a common pattern that have been [adopted by tanstack router](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#route-loaders). This is a fantastic solution which hoists data fetching for routes to a single place that will be guaranteed to avoid waterfalls.
 

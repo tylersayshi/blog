@@ -1,10 +1,4 @@
-export const Note = ({
-  title,
-  content,
-}: {
-  title: string;
-  content: string;
-}) => {
+export const Note = ({ content }: { content: string }) => {
   return (
     <div className="relative bg-yellow-100 border rounded-lg p-4 shadow-lg w-full">
       {/* Pin at the top */}
