@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { PostFrontmatter } from "../types";
 import { Meta } from "../components/meta";
+import { PostLink } from "../components/post-link";
 
 export async function HomePage() {
   const posts = await getData();
@@ -24,16 +25,7 @@ export async function HomePage() {
 const PostCard = ({ post }: { post: PostFrontmatter }) => {
   return (
     <li key={post.slug} className="w-full post-card">
-      <a
-        href={`/${post.slug}`}
-        className="block p-4 w-full rounded-md border-2 border-black dark:border-white text-left hover:bg-slate-200 dark:hover:bg-gray-900"
-      >
-        <div className="flex justify-between">
-          <h2 className="text-xl font-bold">{post.title}</h2>
-          <p className="text-sm ml-2 mt-1 whitespace-nowrap">{post.date}</p>
-        </div>
-        <p className="text-sm">{post.description}</p>
-      </a>
+      <PostLink post={post} />
     </li>
   );
 };
