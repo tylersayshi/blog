@@ -12,7 +12,7 @@ export async function HomePage() {
   ));
 
   return (
-    <article className="container justify-center text-center flex gap-2 flex-col max-w-[500px]">
+    <article className="container justify-center text-center flex gap-2 flex-col max-w-[600px]">
       <Meta title="tyler's blog" description="some thoughts" path="/" />
       <h1 className="text-4xl font-bold tracking-tight mb-4">posts</h1>
       <ul className="flex flex-col gap-2">

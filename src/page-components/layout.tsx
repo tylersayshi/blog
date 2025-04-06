@@ -9,12 +9,17 @@ import { PostHogProvider } from "../components/analytics";
 type RootLayoutProps = { children: ReactNode };
 
 export async function RootLayout({ children }: RootLayoutProps) {
+  console.log("ENV", process.env.NODE_ENV);
   return (
     <div className="font-sans">
       <link rel="icon" href="/favicon.ico" />
       <Header />
-      <main className="m-6 flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 min-h-[calc(100vh-214px)] lg:min-h-svh justify-center">
-        <PostHogProvider>{children}</PostHogProvider>
+      <main className="flex lg:py-12 *:min-h-64 *:min-w-64 lg:m-0 min-h-[calc(100vh-214px)] lg:min-h-svh justify-center">
+        {process.env.NODE_ENV === "development" ? (
+          children
+        ) : (
+          <PostHogProvider>{children}</PostHogProvider>
+        )}
       </main>
       <Footer />
     </div>

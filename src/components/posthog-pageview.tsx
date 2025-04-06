@@ -1,12 +1,11 @@
-// app/PostHogPageView.tsx
 "use client";
 
-import { useRouter_UNSTABLE } from "waku";
+import { useRouter } from "waku";
 import { useEffect, Suspense } from "react";
 import { usePostHog } from "posthog-js/react";
 
 function PostHogPageView(): null {
-  const router = useRouter_UNSTABLE();
+  const router = useRouter();
   const posthog = usePostHog();
 
   // Track pageviews
