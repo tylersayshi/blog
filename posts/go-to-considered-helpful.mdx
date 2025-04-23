@@ -1,10 +1,10 @@
 ---
 title: "Go to Definition in Typescript Monorepos"
-description: How do I get cmd+click to work in monorepos?
-date: "2025-04-06"
+description: how to get cmd+click working in monorepos
+date: "2025-04-23"
 ---
 
-This will be a quick guide for how to get "Go to Definition" working in typescript monorepos instead of the `*.d.ts` files created by the build step. Colin McDonell wrote [a great walkthrough](https://colinhacks.com/essays/live-types-typescript-monorepo) of the different approaches to solving this problem, along with all of the tradeoffs. For this post, we'll just walk through how to use the recommended solution: "customConditions".
+This will be a quick guide for how to get "Go to Definition" working in typescript monorepos instead of the `*.d.ts` files created by the build step. Colin McDonnell wrote [a great walkthrough](https://colinhacks.com/essays/live-types-typescript-monorepo) of the different approaches to solving this problem, along with all of the tradeoffs. For this post, we'll just talk about how to use the recommended solution: "customConditions".
 
 ## Configuring exports in package.json
 
@@ -23,7 +23,7 @@ First, you'll want to specify the typescript file that acts as the entrypoint fo
 
 In this case, I have chosen the custom condition of `my-internal`, but this could be almost anything (stay away from import, require, types, default, etc.).
 
-If you have other exports, add the ts file to those too.
+If you have other exports, add the ts file to those too. It's important that the `my-internal` condition is the first one listed, otherwise it will not be used.
 
 ```json
 "exports": {
@@ -62,13 +62,19 @@ export default {
   resolve: {
     conditions: ["my-internal"],
   },
+  // this part is for vite 6 support
+  environments: {
+    ssr: {
+      resolve: {
+        conditions: ["my-internal"],
+      },
+    },
+  },
 };
 ```
 
 ## A simple example and farewell
 
-https://github.com/TanStack/query/pull/9042
+Here is an example PR where we moved the tanstack/query monorepo from the tsconfig paths technique, over to the customCondition approach: [tanstack/query#9042](https://github.com/TanStack/query/pull/9042)
 
-Implementing this for [waku.gg](https://waku.gg) was quite simple, it just has many exports. Here is [the example PR for this setup](https://github.com/wakujs/waku/pull/1359).
-
-Hopefully you find this helpful and hopefully more monorepos have working "go to definition"!
+Hopefully you find this helpful and hopefully more monorepos support working "go to definition"!

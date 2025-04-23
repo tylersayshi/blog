@@ -30,7 +30,10 @@ export async function PostPage({ slug }: BlogArticlePageProps) {
       />
       <article className="mx-4 container prose dark:prose-invert">
         <h1>{frontmatter.title}</h1>
-        <span className="block text-gray-500 -mt-6 -mb-2">{date}</span>
+        <span className="block text-gray-500 text-xl -mt-6 mb-2">
+          {frontmatter.description}
+        </span>
+        <span className="block text-gray-500 -mb-2">{date}</span>
         {content}
       </article>
     </>
