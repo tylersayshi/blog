@@ -1,0 +1,74 @@
+---
+title: "Go to Definition in Typescript Monorepos"
+description: How do I get cmd+click to work in monorepos?
+date: "2025-04-06"
+---
+
+This will be a quick guide for how to get "Go to Definition" working in typescript monorepos instead of the `*.d.ts` files created by the build step. Colin McDonell wrote [a great walkthrough](https://colinhacks.com/essays/live-types-typescript-monorepo) of the different approaches to solving this problem, along with all of the tradeoffs. For this post, we'll just walk through how to use the recommended solution: "customConditions".
+
+## Configuring exports in package.json
+
+First, you'll want to specify the typescript file that acts as the entrypoint for each of your exports.
+
+```json
+"exports": {
+  "./package.json": "./package.json",
+  ".": {
+    "my-internal": "./src/main.ts",
+    "types": "./dist/main.d.ts",
+    "default": "./dist/main.js"
+  },
+},
+```
+
+In this case, I have chosen the custom condition of `my-internal`, but this could be almost anything (stay away from import, require, types, default, etc.).
+
+If you have other exports, add the ts file to those too.
+
+```json
+"exports": {
+  "./package.json": "./package.json",
+  ".": {
+    "my-internal": "./src/main.ts",
+    "types": "./dist/main.d.ts",
+    "default": "./dist/main.js"
+  },
+  "./other": {
+    "my-internal": "./src/other.ts",
+    "types": "./dist/other.d.ts",
+    "default": "./dist/other.js"
+  }
+},
+```
+
+## Configuring the tsconfig.json
+
+Use the custom condition in all of your monorepos tsconfig's. In this case, it is helpful if all your tsconfigs extend a single base config.
+
+```json
+{
+  "compilerOptions": {
+    "customConditions": ["my-internal"]
+  }
+}
+```
+
+## In case you use vite
+
+In your `vite.config.ts`:
+
+```ts
+export default {
+  resolve: {
+    conditions: ["my-internal"],
+  },
+};
+```
+
+## A simple example and farewell
+
+https://github.com/TanStack/query/pull/9042
+
+Implementing this for [waku.gg](https://waku.gg) was quite simple, it just has many exports. Here is [the example PR for this setup](https://github.com/wakujs/waku/pull/1359).
+
+Hopefully you find this helpful and hopefully more monorepos have working "go to definition"!

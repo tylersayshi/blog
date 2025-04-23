@@ -9,7 +9,6 @@ import { PostHogProvider } from "../components/analytics";
 type RootLayoutProps = { children: ReactNode };
 
 export async function RootLayout({ children }: RootLayoutProps) {
-  console.log("ENV", process.env.NODE_ENV);
   return (
     <div className="font-sans">
       <link rel="icon" href="/favicon.ico" />
