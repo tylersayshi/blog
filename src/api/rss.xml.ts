@@ -74,7 +74,9 @@ export const GET = async () => {
       pubDate: new Date(Date.UTC(year, month - 1, day)).toUTCString(),
     });
   }
-
+  items.sort((a, b) => {
+    return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+  });
   const rssFeed = generateRSSFeed(items);
   return new Response(rssFeed, {
     headers: {
