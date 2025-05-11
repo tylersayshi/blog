@@ -114,20 +114,6 @@ I chose to make this particular api as an object where the key and value are the
 import type { Context } from "react";
 import { useContext } from "react";
 
-/**
- * Helper to make a useContext hook that is generic for your specific
- * context type where it will check to be sure it is a descendant of your
- * Context.Provider and throw an error if not.
- *
- * @example
- *   export const MyPageStateContext = createContext<MyPageState | null>(
- *     null,
- *   );
- *   export const useMyPageState = makeMyUseContext(
- *     MyPageStateContext,
- *     "MyPageStateContext",
- *   );
- */
 export const makeSafeUseContext = <T>(
   context: Context<T | null>,
   name: string,
