@@ -18,7 +18,7 @@ const generateRSSFeed = (items: Item[]) => {
      <pubDate>${item.pubDate}</pubDate>
      <description>${item.description}</description>
      <guid isPermaLink="true">${item.link}</guid>
-   </item>`
+   </item>`,
     )
     .join("");
 

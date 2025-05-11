@@ -46,7 +46,7 @@ When you start using nuqs, you may start out with something like this:
 const HomePage = () => {
   const [number, setNumber] = useQueryState(
     "number",
-    parseAsNumber.withDefault(0)
+    parseAsNumber.withDefault(0),
   );
 
   return (

@@ -7,11 +7,12 @@ const highlighter = await createHighlighter({
 
 type CodeProps = {
   code: string;
+  lang: string;
 };
 
-export const Code = async ({ code, ...rest }: CodeProps) => {
-  const html = await highlighter.codeToHtml(code.trim(), {
-    lang: "typescript",
+export const Code = ({ code, lang, ...rest }: CodeProps) => {
+  const html = highlighter.codeToHtml(code.trim(), {
+    lang,
     themes: { dark: "github-dark", light: "github-light" },
   });
 

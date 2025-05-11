@@ -47,10 +47,12 @@ export const components = {
   },
 
   pre: ({ children, ...rest }: any) => {
+    const lang = children?.props?.className?.replace(/language-/, "") || "";
     return (
       <Code
         code={children.props.children}
         className="code overflow-x-auto text-xs md:text-base rounded-xl"
+        lang={lang}
         {...rest}
       />
     );

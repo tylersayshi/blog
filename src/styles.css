@@ -21,8 +21,9 @@
 }
 
 @theme {
-  --font-chalk: Chalkboard, ChalkboardSE-Regular, ChalkboardSE, ChalkDuster,
-    Comic Sans MS, comic-sans, sans-serif;
+  --font-chalk:
+    Chalkboard, ChalkboardSE-Regular, ChalkboardSE, ChalkDuster, Comic Sans MS,
+    comic-sans, sans-serif;
 }
 
 h1,
