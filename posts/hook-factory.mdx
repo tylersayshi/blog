@@ -1,0 +1,153 @@
+---
+title: "React Hook Factory"
+description: how to create custom hooks programatically
+date: "2025-05-11"
+---
+
+[Custom hooks in React](https://react.dev/learn/reusing-logic-with-custom-hooks) are a super powerful tool to have in your toolbelt. They're a fantastic way to encapsulate reactive logic that can be used across any number of components. This is really where the functional power of React shines.
+
+If you've been writing custom hooks for a while, you may have run into a scenario where you're defining the same type of hook over and over. By and large, this is ok. Sometimes though, the desire for an abstracted version of that hook can become too much.
+
+## A hook I had written over and over
+
+This may look familiar to you:
+
+```ts
+import type { Context } from "react";
+import { useContext } from "react";
+
+export const MyContext = createContext<MyPageState | null>(null);
+
+export const useMyState = () => {
+  const context = useContext(MyContext);
+  if (!context) {
+    throw new Error(`MyContext.Provider was not found in tree`);
+  }
+  return context;
+};
+```
+
+If you're not familiar: this is a [relatively common pattern](https://kentcdodds.com/blog/how-to-use-react-context-effectively#the-custom-consumer-hook) (especially in typescript codebases) where we check for the existence of the Provider in our component tree before interacting with the context.
+
+Now you may use a third party state library and that's completely cool. This pattern can be useful for composing any sort of repeated custom hooks, but context makes for a great example. For this post we'll look at a way to make this `useContext` pattern in a less redundant way.
+
+## Introducing the Hook Factory
+
+Hooks are functions, so in the same way that we can nest and compose functions, we can compose hooks. Let's say we want to create a hook called `useCounter` and we want to give it a custom function to change the count by.
+
+```tsx
+import { useState } from "react";
+
+const makeCounterHook = (changeFn: (current: number) => number) => {
+  return (initialVal: number) => {
+    const [count, setCount] = useState(initialVal);
+
+    const increment = () => setCount((current) => changeFn(current));
+    const decrement = () => setCount((current) => -changeFn(-current));
+    const reset = () => setCount(initialVal);
+
+    return { count, increment, decrement, reset };
+  };
+};
+
+const useCounter = makeCounterHook((current) => current + 1);
+const usePlusTwoCounter = makeCounterHook((current) => current + 2);
+
+const Counter = () => {
+  const { count, increment, decrement, reset } = usePlusTwoCounter();
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+};
+```
+
+You could write these three hooks separately, but the pattern of composition is what is important here.
+
+## Back to the Context example
+
+So for the real world case where we are repeating the safe use context pattern throughout our codebase we could now use this pattern to abstract that into a single factory function!
+
+```ts
+import type { Context } from "react";
+import { useContext } from "react";
+
+/**
+ * Helper to make a useContext hook that is generic for your specific
+ * context type where it will check to be sure it is a descendant of your
+ * Context.Provider and throw an error if not.
+ *
+ * @example
+ *   export const MyPageStateContext = createContext<MyPageState | null>(
+ *     null,
+ *   );
+ *   export const useMyPageState = makeMyUseContext({
+ *     MyPageStateContext,
+ *   });
+ */
+export const makeSafeUseContext = <T>(
+  contextObj: Record<string, Context<T | null>>,
+): (() => T) => {
+  const entries = Object.entries(contextObj);
+  if (entries.length !== 1) {
+    throw new Error("Context object must have a single key value pair");
+  }
+  const [[name, context]] = entries;
+  return (): T => {
+    const currContext = useContext(context);
+    if (!currContext) {
+      throw new Error(`${name}.Provider was not found in tree`);
+    }
+    return currContext;
+  };
+};
+```
+
+I chose to make this particular api as an object where the key and value are the context definition. This was so the name of the variable is available at runtime for the error message. You could alternatively implement this with a separate name from the context:
+
+```ts
+import type { Context } from "react";
+import { useContext } from "react";
+
+/**
+ * Helper to make a useContext hook that is generic for your specific
+ * context type where it will check to be sure it is a descendant of your
+ * Context.Provider and throw an error if not.
+ *
+ * @example
+ *   export const MyPageStateContext = createContext<MyPageState | null>(
+ *     null,
+ *   );
+ *   export const useMyPageState = makeMyUseContext(
+ *     MyPageStateContext,
+ *     "MyPageStateContext",
+ *   );
+ */
+export const makeSafeUseContext = <T>(
+  context: Context<T | null>,
+  name: string,
+): (() => T) => {
+  return (): T => {
+    const currContext = useContext(context);
+    if (!currContext) {
+      throw new Error(`${name}.Provider was not found in tree`);
+    }
+    return currContext;
+  };
+};
+```
+
+This makes the implementation a bit simpler and easier to read. I was just too lazy to write `makeMyUseContext(MyPageStateContext, 'MyPageStateContext')` everywhere I use the factory.
+
+## With great power comes great responsibility
+
+This is a pattern I'd recommend using very sparingly. It's extremely useful when many many hooks are defined effectively the same way. When there are discrete differences between many similar hooks though, just [inline it](https://www.deconstructconf.com/2019/dan-abramov-the-wet-codebase#:~:text=But%20if%20we,also%20change%20it.). Forcing a hook factory onto a set of slightly disparate hooks is the same footgun that creating [components with too many responsibilities](https://dio.la/article/the-everything-bagel-of-components) presents. That is a bad use of abstraction.
+
+For the right use case, this is a very nice thing to be able to do. Afterall, it's how state libraries like zustand create their `useStore` [hooks programatically](https://github.com/pmndrs/zustand/blob/main/src/react.ts#L53-L61).
+
+Finding the right level of abstraction can feel tedious, but for making safe `useMyContext`s it's pretty great! Good luck abstracting :)
