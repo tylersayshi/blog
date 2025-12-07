@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, useRouter_UNSTABLE as useRouter } from "waku";
+import { Link, useRouter } from "waku";
 import { PostFrontmatter } from "../types";
 
 export function PostLink({ post }: { post: PostFrontmatter }) {

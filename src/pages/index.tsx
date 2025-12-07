@@ -4,7 +4,7 @@ import { PostFrontmatter } from "../types";
 import { Meta } from "../components/meta";
 import { PostLink } from "../components/post-link";
 
-export async function HomePage() {
+export default async function HomePage() {
   const posts = await getData();
 
   const allPosts = posts.map((post) => (

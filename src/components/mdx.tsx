@@ -34,9 +34,11 @@ export const components = {
   },
   a: ({ href, children, ...rest }: any) => {
     if (href.startsWith("/")) {
-      <Link to={href} {...rest}>
-        {children}
-      </Link>;
+      return (
+        <Link to={href} {...rest}>
+          {children}
+        </Link>
+      );
     }
 
     return (

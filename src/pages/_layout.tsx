@@ -1,4 +1,4 @@
-import "../styles.css";
+import "./styles.css";
 
 import type { ReactNode } from "react";
 
@@ -8,7 +8,7 @@ import { PostHogProvider } from "../components/analytics";
 
 type RootLayoutProps = { children: ReactNode };
 
-export async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="font-sans">
       <link rel="icon" href="/favicon.ico" />
