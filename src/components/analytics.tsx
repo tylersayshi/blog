@@ -5,11 +5,14 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
 import { useEffect } from "react";
 import { SuspendedPostHogPageView as PostHogPageView } from "./posthog-pageview";
 
+const POSTHOG_KEY = "phc_Freu7CLoutNnJBefDxniHNOm9lMChMpMU7Az17Kvfhe";
+const POSTHOG_HOST = "https://us.i.posthog.com";
+
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    posthog.init("phc_Freu7CLoutNnJBefDxniHNOm9lMChMpMU7Az17Kvfhe", {
-      api_host: "https://us.i.posthog.com",
-      capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+    posthog.init(POSTHOG_KEY, {
+      api_host: POSTHOG_HOST,
+      capture_pageview: false,
       capture_pageleave: true,
     });
   }, []);
