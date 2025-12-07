@@ -1,4 +1,5 @@
 import { Link } from "waku/router/client";
+import { BskyEmbed } from "rsc-bsky-embed";
 
 import { Code } from "./code";
 import { Note } from "./note";
@@ -61,4 +62,5 @@ export const components = {
   },
 
   Note,
+  BskyEmbed,
 };
