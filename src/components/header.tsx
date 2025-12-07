@@ -1,4 +1,4 @@
-import { Link } from "waku";
+import { Link } from "waku/router/client";
 import { Face } from "./face";
 
 export const Header = () => {

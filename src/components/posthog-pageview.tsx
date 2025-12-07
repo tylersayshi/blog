@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "waku";
+import { useRouter } from "waku/router/client";
 import { useEffect, Suspense } from "react";
 import { usePostHog } from "posthog-js/react";
 
