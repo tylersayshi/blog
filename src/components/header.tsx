@@ -3,11 +3,11 @@ import { Face } from "./face";
 
 export const Header = () => {
   return (
-    <header className="flex items-center gap-4 p-6 lg:fixed lg:left-0 lg:top-0 lg:right-0 justify-between w-full">
-      <h2 className="text-lg font-bold tracking-tight">
+    <header className="flex items-center gap-4 p-6 lg:fixed lg:left-0 lg:top-0 lg:right-0 justify-between w-full pointer-events-none">
+      <h2 className="text-lg font-bold tracking-tight pointer-events-auto">
         <Link to="/">༼ ╹‿╹ ༽</Link>
       </h2>
-      <a href="https://tylur.dev">
+      <a href="https://tylur.dev" className="pointer-events-auto">
         <Face height={50} />
       </a>
     </header>
