@@ -30,8 +30,8 @@ importers:
         specifier: 19.2.1
         version: 19.2.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(webpack@5.96.1)
       rsc-bsky-embed:
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^1.0.6
+        version: 1.0.6
       shiki:
         specifier: ^3.19.0
         version: 3.19.0
@@ -1472,8 +1472,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsc-bsky-embed@1.0.2:
-    resolution: {integrity: sha512-cTNkWVdMt9LU7FrrrPEbFCJXE401W8oxZrOuZNE188sRKFlLICkIgo9wxKrKdnFi+CaGXfQF1g7oEll+dgF3QA==}
+  rsc-bsky-embed@1.0.6:
+    resolution: {integrity: sha512-R54pTdZ/k/vh094dX1xkfL0Pj8vDCTihS9SP1OL7L6B6hhW+2h8+oE4J5FQOKuRxW7q1uh7rf8YSS22X34StCQ==}
 
   rsc-html-stream@0.0.7:
     resolution: {integrity: sha512-v9+fuY7usTgvXdNl8JmfXCvSsQbq2YMd60kOeeMIqCJFZ69fViuIxztHei7v5mlMMa2h3SqS+v44Gu9i9xANZA==}
@@ -3347,7 +3347,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.53.3
       fsevents: 2.3.3
 
-  rsc-bsky-embed@1.0.2: {}
+  rsc-bsky-embed@1.0.6: {}
 
   rsc-html-stream@0.0.7: {}
 

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "waku dev",
-    "build": "waku build --with-netlify-static",
+    "build": "waku build",
     "start": "waku start"
   },
   "dependencies": {
@@ -16,7 +16,7 @@
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-server-dom-webpack": "19.2.1",
-    "rsc-bsky-embed": "^1.0.2",
+    "rsc-bsky-embed": "^1.0.6",
     "shiki": "^3.19.0",
     "waku": "^0.27.3"
   },
